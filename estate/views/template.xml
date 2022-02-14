@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <!-- <template id="theme_custom.new_homepage" inherit_id="website.homepage">
+        <xpath expr="//div[@id='wrap']" position="replace">
+          <div id="wrap" class="oe_structure">
+              hello
+          </div>
+        </xpath>
+    </template> -->
+
+    <template id="property_static" name="Property_Static">
+        <t t-call="website.layout">
+            <div class="container">
+                <div class="text-center font-weight-bold">This is Our Estate Property Site !!!</div>
+            </div>
+        </t>
+    </template>
+
+    <template id="property" name="Property">
+
+        <t t-call="website.layout">
+            <div class="container">
+                <h3 class="text-center">Real Estate Properties</h3>
+                <table class="table table-bordered mb64">
+                    <thead>
+                        <tr>
+                            <th class="text-center">
+                                Sr.No
+                            </th>
+                            <th class="text-center">
+                                Property Name
+                            </th>
+                            <th class="text-center">
+                                Description
+                            </th>
+                            <th class="text-center">
+                                Garage Available
+                            </th>
+                            <th class="text-center">
+                                Garden Available
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <t t-set="seq" t-value="1"/>
+                        <t t-foreach="properties" t-as="pro">
+                        <tr>
+                            <td>
+                                <t t-out="seq"/>
+                            </td>
+                            <td>
+                                <a t-attf-href="/property/#{pro.id}">
+                                    <t t-out="pro.name"/>
+                                </a>
+                            </td>
+
+                            <td>
+                                <t t-if="pro.description" t-out="pro.description"/>
+                                <t t-else="">No Description Available</t>
+                                <t t-out="pro.property_type_id.name"/>
+                            </td>
+
+                            <td>
+                                    <t t-out="pro.garage"/>
+                              
+                            </td>
+                            <td>
+                                    
+                                    <t t-out="pro.garden"/>
+                            </td>
+
+                        <t t-set="seq" t-value="seq+1"/>
+                        </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+
+ 
+    <template id="properyt_description" name="Property Description" inherit_id="property_details" customize_show="True">
+        <xpath expr="//div[contains(@class, 'o_property_details')]" position="inside">
+            <div t-field="property.description"></div>
+        </xpath>
+    </template>
+
+
+
+    <template id="property_details" name="Properyt_Details">
+        <div t-call="website.layout">
+            <div class="container">
+                <div class="row">
+                    <div class="col-4">
+                        <!-- <div t-attf-style="padding-top: 50%; background-image: url(/web/image/course.course/#{property.id}/image_1024); background-size: cover; background-position:center"/> -->
+                        <div>
+                            <div>State of the Property</div>
+                            <div t-field="property.state"/>
+                        </div>
+                    </div>
+                    <div class="col-8 o_property_details">
+                        <div class="text-center font-weight-bold"><span t-field="property.name"/></div>
+                    </div>
+                </div>
+            </div>
+        </div>        
+    </template>
+
+
+    
+
+
+
+</odoo>

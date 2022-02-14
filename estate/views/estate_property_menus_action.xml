@@ -1,0 +1,71 @@
+<!-- Action for above task -->
+<odoo>
+    
+    <record id="estate_my_property_action" model="ir.actions.act_window">
+        <field name="name">My Property</field>
+        <field name="res_model">estate.property</field>
+        <field name="view_mode">tree,form</field>
+        <!-- <field name="domain">[('state','=','cancel')]</field> -->
+        <!-- <field name="context">{'search_default_my_property_search':1,'search_default_garden_true':1,'is_my_property':True}</field> -->
+
+        <field name="context">{'search_default_my_property_search':1,'search_default_garden_true':1,'is_my_property': True}</field>
+    </record>
+<!-- Property Offer action -->
+
+    <record id="estate_property_offer_action" model="ir.actions.act_window">
+            <field name="name">Property Offer</field>
+            <field name="res_model">estate.property.offer</field>
+            <!-- <field name="domain">[('status', '=', 'accepted')]</field> -->
+            <field name="view_mode">tree,form</field>
+    </record>
+
+<!-- Property offer action for show only accepted offers from kanban view button click -->
+    <record id="estate_property_accepted_offer_action" model="ir.actions.act_window">
+            <field name="name">estate.property.accepted.offer.action</field>
+            <field name="res_model">estate.property.offer</field>
+            <field name="domain">[('status','=','accepted'), ('property_id', '=', active_id)]</field>
+            <field name="context">{'default_property_id':active_id}</field>
+            <field name="view_mode">tree</field>
+    </record>
+    
+
+    <!-- Property Tag action -->
+    <record id="estate_property_tag_action" model="ir.actions.act_window">
+            <field name="name">Property Tag</field>
+            <field name="res_model">estate.property.tag</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+    <!-- This is action for proprty type -->
+        <record id="estate_property_type_action" model="ir.actions.act_window">
+            <field name="name">Propert Type</field>
+            <field name="res_model">estate.property.type</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    <!-- This is action for the model when click on the above any view -->
+
+        <record id="estate_model_action" model="ir.actions.act_window">
+            <field name="name">Properties</field>
+            <field name="res_model">estate.property</field>
+            <field name="view_mode">kanban,graph,pivot,gantt,calendar,tree,form</field>
+            <field name="context">{'search_default_garden_true':1}</field>
+        </record>
+
+    
+    <!-- Menuitem for all action -->
+        <menuitem id="menu_real_estate_root" name="Reat Estate" web_icon="estate,static/description/icon.png">
+            <menuitem id="menu_real_estate_advertisments" name="Advertisements">
+                <menuitem id="menu_my_estate_action" action="estate_my_property_action"/>
+                <menuitem id="menu_real_estate_action" action="estate_model_action"/>
+                <menuitem id="menu_real_estate_offer_action" action="estate_property_offer_action"/>
+                <menuitem id="menu_real_estate_offer_action2" action="estate_my_property_action2"/>
+
+                
+            </menuitem>
+        </menuitem>
+        
+    <!-- Setting menu for property type -->
+        <menuitem id="estate_property_type_menu" parent="menu_real_estate_root" name="Setting"/>
+            <menuitem id="estate_property_type_action_menu" parent="estate_property_type_menu" action="estate_property_type_action"/>
+            <menuitem id="estate_property_tag_action_menu" parent="estate_property_type_menu" action="estate_property_tag_action"/>
+</odoo>
