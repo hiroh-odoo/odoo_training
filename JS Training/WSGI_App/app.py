@@ -63,15 +63,14 @@ class MovieApp(object):
         return self.render_template('movies.html', render_context={'name':result})
 
     def add_movie(self, request):
-        name=request.form['name']
-        price=request.form['price']
-        conn = psycopg2.connect(database='wsgi', user='postgres', password='123456', host='localhost', port='5432')
-        cur = conn.cursor()
-        cur.execute("INSERT INTO movie values(%s,%s)",(name,price))
-        result = cur.fetchall()
-        print(result)
-        conn.commit()
-        return self.render_template('movies.html', render_context={'name':result})
+        if request.method=='POST':
+            name=request.form['name']
+            price=request.form['price']
+            conn = psycopg2.connect(database='wsgi', user='postgres', password='123456', host='localhost', port='5432')
+            cur = conn.cursor()
+            cur.execute("INSERT INTO movie values(%s,%s)",(name,price))
+            conn.commit()
+        return self.render_template('add_movie.html', render_context={})
 
 
 
