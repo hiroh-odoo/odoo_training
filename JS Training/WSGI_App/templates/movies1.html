@@ -1,0 +1,20 @@
+<html>
+    <head>
+        <title>Display Movies
+        </title>
+    </head>
+            <body>
+                Hello Deepak
+                <div id="container">
+                    {% for name in name %}
+                    <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ name[0] }}</h5>
+                        <h6 class="card-title">Rs.{{ name[1]}}</h6>
+                    </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </body>
+      
+</html>
