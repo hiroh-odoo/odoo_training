@@ -1,14 +1,22 @@
 import os
 
-from werkzeug.middleware.shared_data import SharedDataMiddleware
 from werkzeug.wrappers import Request, Response
 
 from jinja2 import Environment, FileSystemLoader
-from werkzeug.routing import Map, Rule
 from werkzeug.exceptions import HTTPException
 import psycopg2
 
 
+try:
+    from werkzeug.middleware.shared_data import SharedDataMiddleware
+except ImportError:
+    from werkzeug.wsgi import SharedDataMiddleware
+from werkzeug.routing import Map
+from werkzeug.routing import Rule
+# from werkzeug.urls import url_parse
+# from werkzeug.utils import redirect
+from werkzeug.wrappers import Request
+from werkzeug.wrappers import Response
 
 class MovieApp(object):
     """Implements a WSGI application for managing your favorite movies."""
@@ -51,7 +59,7 @@ class MovieApp(object):
         return Response(template.render(context.get('render_context')), mimetype='text/html')
 
     def index(self, request):
-        return self.render_template('base.html')
+        return self.render_template('base.html',render_context={})
 
     def movies(self, request):
         conn = psycopg2.connect(database='wsgi', user='postgres', password='123456', host='localhost', port='5432')
@@ -63,15 +71,14 @@ class MovieApp(object):
         return self.render_template('movies.html', render_context={'name':result})
 
     def add_movie(self, request):
-        name=request.form['name']
-        price=request.form['price']
-        conn = psycopg2.connect(database='wsgi', user='postgres', password='123456', host='localhost', port='5432')
-        cur = conn.cursor()
-        cur.execute("INSERT INTO movie values(%s,%s)",(name,price))
-        result = cur.fetchall()
-        print(result)
-        conn.commit()
-        return self.render_template('movies.html', render_context={'name':result})
+        if request.method=='POST':
+            name=request.form['name']
+            price=request.form['price']
+            conn = psycopg2.connect(database='wsgi', user='postgres', password='123456', host='localhost', port='5432')
+            cur = conn.cursor()
+            cur.execute("INSERT INTO movie values(%s,%s)",(name,price))
+            conn.commit()
+        return self.render_template('add_movie.html', render_context={})
 
 
 
