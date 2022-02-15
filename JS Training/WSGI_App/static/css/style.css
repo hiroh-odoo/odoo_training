@@ -1,0 +1,8 @@
+.content-wrapper {
+    width: 80%;
+    height: 3000px;
+    padding: 1em 10%;
+  }
+footer {
+    bottom: 0px;
+}
